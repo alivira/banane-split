@@ -1,9 +1,8 @@
 import React, { Component } from "react";
+import { useState } from "react";
 
 class Counter extends Component {
   render() {
-    console.log(this.props);
-
     return (
       <div>
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
@@ -13,15 +12,29 @@ class Counter extends Component {
         >
           Increment
         </button>
-
         <button
           onClick={() => this.props.onDelete(this.props.counter.id)}
           className="btn btn-danger btn-sm m-2"
         >
           Delete
         </button>
+        <form>
+          <input
+            type="number"
+            required
+            value={this.getValue()}
+            onChange={(e) =>
+              this.props.updateValue(this.props.counter, Number(e.target.value))
+            }
+          ></input>
+        </form>
       </div>
     );
+  }
+
+  getValue() {
+    const { value: count } = this.props.counter;
+    return count;
   }
 
   getBadgeClasses() {
