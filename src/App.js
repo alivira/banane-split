@@ -60,6 +60,7 @@ class App extends Component {
     counters[index] = { ...counter };
     counters[index].value = e;
     this.setState({ counters });
+    this.updateBreakdown();
   };
 
   handleUpdateBill = (counter, user, portion) => {
@@ -90,6 +91,7 @@ class App extends Component {
     }
     this.setState({ users: newUsers });
     console.log("Updated users", this.state.users);
+    this.updateBreakdown();
   };
 
   handleUpdateName = (user, name) => {
@@ -155,42 +157,57 @@ class App extends Component {
     var count = this.calculateTotal();
     count +=
       Number(this.state.totals[0].tax) + Number(this.state.totals[0].tip);
-    this.calculateBreakdown();
+
     return count;
   };
 
-  calculateBreakdown = () => {
+  updateBreakdown = () => {
+    let newUsers = this.state.users;
+    for (let i = 0; i < newUsers.length; i++) {
+      newUsers[i].total = this.calculateBreakdown(newUsers[i]);
+      console.log(newUsers);
+    }
+    this.setState({ users: newUsers });
+    console.log("User State", this.state.users);
+  };
+
+  calculateBreakdown = (user) => {
     var bills = this.state.counters.slice();
-    var users = this.state.users.slice();
+    var total = 0;
 
-    for (let i = 0; i < users.length; i++) {
-      for (let j = 0; j < users[i].bills.length; j++) {
-        var sampleBill = users[i].bills[j].billId;
-        var billIndex = -1;
-        console.log("sampleBill pre", sampleBill);
+    for (let i = 0; i < user.bills.length; i++) {
+      var sampleBill = user.bills[i].billId;
+      var billIndex = -1;
+      console.log("sampleBill pre", sampleBill);
 
-        for (var finder = 0; finder < bills.length; finder++) {
-          if (bills[finder].id === sampleBill) {
+      for (var finder = 0; finder < bills.length; finder++) {
+        if (bills[finder].id === sampleBill) {
+          console.log(
+            "Iteration: ",
+            finder,
+            "| Value: ",
+            bills[finder].id,
+            "| SampleBill: ",
+            sampleBill
+          );
+          billIndex = finder;
+          console.log("MATCHED");
+          if (billIndex !== -1) {
+            total += bills[billIndex].value * user.bills[i].portion;
             console.log(
-              "Iteration: ",
-              finder,
-              "| Value: ",
-              bills[finder].id,
-              "| SampleBill: ",
-              sampleBill
+              "Total = ",
+              total,
+              "Bill Value = ",
+              bills[billIndex].value,
+              "Portion = ",
+              user.bills[i].portion
             );
-            billIndex = finder;
-            console.log("MATCHED");
           }
         }
-        console.log("sampleBill", sampleBill, "billIndex", billIndex);
-
-        if (billIndex !== -1) {
-          users[i].total += bills[billIndex].value * users[i].bills[j].portion;
-          console.log("User total", users[i].total);
-        }
       }
+      console.log("sampleBill", sampleBill, "billIndex", billIndex);
     }
+    return total;
   };
 
   render() {
