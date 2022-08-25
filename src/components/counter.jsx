@@ -1,26 +1,12 @@
 import React, { Component } from "react";
+import close from "../images/circle-xmark-solid.svg";
 import User from "./user";
-
 class Counter extends Component {
   render() {
     return (
       <div>
         <div className="row">
           <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
-
-          <button
-            onClick={() => this.props.onIncrement(this.props.counter)}
-            className="btn btn-secondary btn-sm"
-          >
-            Increment
-          </button>
-
-          <button
-            onClick={() => this.props.onDelete(this.props.counter.id)}
-            className="btn btn-danger btn-sm m-2"
-          >
-            Delete
-          </button>
 
           <form>
             <input
@@ -35,6 +21,15 @@ class Counter extends Component {
               }
             ></input>
           </form>
+
+          <img
+            src={close}
+            style={{ width: "15px", fill: "white", margin: "10px" }}
+            onClick={() => this.props.onDelete(this.props.counter.id)}
+            type="button"
+            alt="remove line entry"
+          ></img>
+
           {this.props.users.map((user) => (
             <div className="col" style={{ columnWidth: "50px" }}>
               <User

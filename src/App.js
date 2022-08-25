@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./components/navbar";
 import Counters from "./components/counters";
+import update from "immutability-helper";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,9 +16,19 @@ class App extends Component {
     users: [
       {
         id: uuidv4(),
-        name: "",
+        name: "sample",
         total: 0,
-        bills: [{ billId: "", portion: 0 }],
+        bills: [{ billId: "sample", portion: 0 }],
+      },
+    ],
+    totals: [
+      {
+        subTotal: 0,
+        grandTotal: 0,
+        tax: 0,
+        taxRatio: 0,
+        tip: 0,
+        tipRatio: 0,
       },
     ],
   };
@@ -62,11 +73,6 @@ class App extends Component {
 
     var billIndex = 0;
 
-    console.log("User Index", userIndex);
-    console.log("Bill Id", newBillId);
-    console.log("User Array", newUsers);
-    console.log("UserId", user);
-
     for (var i = 0; i < newUsers[userIndex].bills.length; i++) {
       if (newUsers[userIndex].bills[i].billId === newBillId) {
         billIndex = i;
@@ -74,10 +80,6 @@ class App extends Component {
         billIndex = -1;
       }
     }
-
-    console.log("Bill Index", billIndex);
-
-    // const billIndex = newUsers[userIndex][3][1].indexOf(newBillId);
 
     if (billIndex !== -1) {
       newUsers[userIndex].bills[billIndex].portion = newPortion;
@@ -88,6 +90,17 @@ class App extends Component {
     }
     this.setState({ users: newUsers });
     console.log("Updated users", this.state.users);
+  };
+
+  handleUpdateName = (user, name) => {
+    const newUser = user;
+    const newName = name;
+    const newUsers = this.state.users.slice();
+    const userIndex = newUsers.indexOf(newUser);
+    console.log("User Index", userIndex);
+    newUsers[userIndex].name = newName;
+    this.setState({ users: newUsers });
+    console.log("Updated user name", this.state.users);
   };
 
   handleAddRow = () => {
@@ -107,11 +120,27 @@ class App extends Component {
       id: newId,
       name: newName,
       total: newTotal,
-      bills: [{ billId: "", portion: 0 }],
+      bills: [{ billId: "sample", portion: 0 }],
     };
     const newArray = this.state.users.slice();
     newArray.push(newRow);
     this.setState({ users: newArray });
+  };
+
+  handleUpdateTax = (tax) => {
+    const totals = [...this.state.totals];
+    totals.tax = tax;
+    this.setState({
+      totals: update(this.state.totals, { 0: { tax: { $set: tax } } }),
+    });
+  };
+
+  handleUpdateTip = (tip) => {
+    const totals = [...this.state.totals];
+    totals.tip = tip;
+    this.setState({
+      totals: update(this.state.totals, { 0: { tip: { $set: tip } } }),
+    });
   };
 
   calculateTotal = () => {
@@ -120,6 +149,48 @@ class App extends Component {
       count += this.state.counters[i].value;
     }
     return count;
+  };
+
+  finalTotal = () => {
+    var count = this.calculateTotal();
+    count +=
+      Number(this.state.totals[0].tax) + Number(this.state.totals[0].tip);
+    this.calculateBreakdown();
+    return count;
+  };
+
+  calculateBreakdown = () => {
+    var bills = this.state.counters.slice();
+    var users = this.state.users.slice();
+
+    for (let i = 0; i < users.length; i++) {
+      for (let j = 0; j < users[i].bills.length; j++) {
+        var sampleBill = users[i].bills[j].billId;
+        var billIndex = -1;
+        console.log("sampleBill pre", sampleBill);
+
+        for (var finder = 0; finder < bills.length; finder++) {
+          if (bills[finder].id === sampleBill) {
+            console.log(
+              "Iteration: ",
+              finder,
+              "| Value: ",
+              bills[finder].id,
+              "| SampleBill: ",
+              sampleBill
+            );
+            billIndex = finder;
+            console.log("MATCHED");
+          }
+        }
+        console.log("sampleBill", sampleBill, "billIndex", billIndex);
+
+        if (billIndex !== -1) {
+          users[i].total += bills[billIndex].value * users[i].bills[j].portion;
+          console.log("User total", users[i].total);
+        }
+      }
+    }
   };
 
   render() {
@@ -132,6 +203,7 @@ class App extends Component {
           <Counters
             counters={this.state.counters}
             users={this.state.users}
+            totals={this.state.totals}
             onReset={this.handleReset}
             onIncrement={this.handleIncrement}
             onDelete={this.handleDelete}
@@ -139,6 +211,11 @@ class App extends Component {
             onAddUser={this.handleAddUser}
             updateValue={this.handleUpdateValue}
             updateBill={this.handleUpdateBill}
+            updateName={this.handleUpdateName}
+            updateTax={this.handleUpdateTax}
+            updateTip={this.handleUpdateTip}
+            subtotal={this.calculateTotal()}
+            grandtotal={this.finalTotal()}
           />
         </main>
       </React.Fragment>
