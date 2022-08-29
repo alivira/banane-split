@@ -18,6 +18,7 @@ class App extends Component {
         id: uuidv4(),
         name: "sample",
         total: 0,
+        grandTotal: 0,
         bills: [{ billId: "sample", portion: 0 }],
       },
     ],
@@ -168,7 +169,42 @@ class App extends Component {
       console.log(newUsers);
     }
     this.setState({ users: newUsers });
-    console.log("User State", this.state.users);
+    this.calculateUserTaxTip();
+    console.log("User State (Update Breakdown)", this.state.users);
+  };
+
+  findPortionTotals = (billId) => {
+    var total = 0;
+    for (let i = 0; i < this.state.users.length; i++) {
+      for (let j = 0; j < this.state.users[i].bills.length; j++)
+        if (this.state.users[i].bills[j].billId === billId) {
+          total += this.state.users[i].bills[j].portion;
+        }
+    }
+    console.log("Bill portion total: ", total);
+    return total;
+  };
+
+  calculateUserTaxTip = () => {
+    var ratio = 0;
+    var tax = 0;
+    var tip = 0;
+    var grandTotal = 0;
+    var newUsers = this.state.users.slice();
+
+    if ((this.state.totals[0].tax || this.state.totals[0].ti) !== 0)
+      for (let i = 0; i < this.state.users.length; i++) {
+        ratio =
+          Number(this.state.users[i].total) / Number(this.calculateTotal());
+        tax = Number(this.state.totals[0].tax) * ratio;
+        tip = Number(this.state.totals[0].tip) * ratio;
+        grandTotal = Number(this.state.users[i].total) + tax + tip;
+        newUsers[i].tax = tax;
+        newUsers[i].tip = tip;
+        newUsers[i].grandTotal = grandTotal;
+
+        this.setState({ users: newUsers });
+      }
   };
 
   calculateBreakdown = (user) => {
@@ -178,34 +214,19 @@ class App extends Component {
     for (let i = 0; i < user.bills.length; i++) {
       var sampleBill = user.bills[i].billId;
       var billIndex = -1;
-      console.log("sampleBill pre", sampleBill);
 
       for (var finder = 0; finder < bills.length; finder++) {
         if (bills[finder].id === sampleBill) {
-          console.log(
-            "Iteration: ",
-            finder,
-            "| Value: ",
-            bills[finder].id,
-            "| SampleBill: ",
-            sampleBill
-          );
           billIndex = finder;
           console.log("MATCHED");
           if (billIndex !== -1) {
-            total += bills[billIndex].value * user.bills[i].portion;
-            console.log(
-              "Total = ",
-              total,
-              "Bill Value = ",
-              bills[billIndex].value,
-              "Portion = ",
-              user.bills[i].portion
-            );
+            total +=
+              bills[billIndex].value *
+              (user.bills[i].portion /
+                this.findPortionTotals(bills[billIndex].id));
           }
         }
       }
-      console.log("sampleBill", sampleBill, "billIndex", billIndex);
     }
     return total;
   };
