@@ -2,14 +2,13 @@ import React, { Component } from "react";
 
 class User extends Component {
   render() {
-    console.log(this.props.counter);
-    console.log(this.props.users);
     return (
       <div>
         <form>
           <input
             type="number"
             required
+            style={{ fontWeight: "200", width: "160px" }}
             onChange={(e) =>
               this.props.updateBill(
                 this.props.counter,

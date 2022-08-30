@@ -16,8 +16,10 @@ class App extends Component {
     users: [
       {
         id: uuidv4(),
-        name: "sample",
+        name: "Name",
         total: 0,
+        tax: 0,
+        tip: 0,
         grandTotal: 0,
         bills: [{ billId: "sample", portion: 0 }],
       },
@@ -117,12 +119,18 @@ class App extends Component {
 
   handleAddUser = () => {
     const newId = uuidv4();
-    const newName = "";
+    const newName = "Name";
     const newTotal = 0;
+    const newTax = 0;
+    const newTip = 0;
+    const newGrandTotal = 0;
     const newRow = {
       id: newId,
       name: newName,
       total: newTotal,
+      tax: newTax,
+      tip: newTip,
+      grandTotal: newGrandTotal,
       bills: [{ billId: "sample", portion: 0 }],
     };
     const newArray = this.state.users.slice();

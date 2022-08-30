@@ -1,15 +1,15 @@
 import React, { Component } from "react";
+import logo from "../images/bananeLogo.svg";
 
 const NavBar = ({ totalCounters }) => {
   return (
-    <nav class="navbar bg-light">
+    <nav class="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          Total{" "}
-          <span className="badge badge-pill badge-secondary">
-            {totalCounters}
-          </span>
-        </a>
+        <img
+          src={logo}
+          style={{ width: "100px", margin: "10px" }}
+          alt="logo"
+        ></img>
       </div>
     </nav>
   );

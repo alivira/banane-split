@@ -6,11 +6,10 @@ class Counter extends Component {
     return (
       <div>
         <div className="row">
-          <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
-
           <form>
             <input
               type="number"
+              style={{ fontWeight: "200", width: "190px" }}
               required
               value={this.getValue()}
               onChange={(e) =>
