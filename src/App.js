@@ -381,6 +381,36 @@ class App extends Component {
             subtotal={this.calculateGlobalSubTotal()}
             grandtotal={this.calculateGlobalGrandTotal()}
           />
+          <div
+            style={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: "130px",
+              padding: "10px",
+              width: "200px",
+            }}
+          >
+            <p style={{ textAlign: "center", fontWeight: "200" }}>
+              made with &#x1F497; by{" "}
+              <a
+                style={{ color: "#FEB83E", fontWeight: "400" }}
+                href="https://linktr.ee/alivira"
+              >
+                ali
+              </a>
+            </p>
+            <a href="https://www.buymeacoffee.com/alivira" target="_blank">
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                alt="Buy Me A Coffee"
+                style={{
+                  margin: "auto",
+                  display: "block",
+                  width: "75%",
+                }}
+              />
+            </a>
+          </div>
         </main>
       </React.Fragment>
     );
