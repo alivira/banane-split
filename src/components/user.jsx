@@ -8,6 +8,7 @@ class User extends Component {
           <input
             type="number"
             required
+            value={this.getValue()}
             style={{ fontWeight: "200", width: "160px" }}
             onChange={(e) =>
               this.props.updateBill(
@@ -23,8 +24,7 @@ class User extends Component {
   }
 
   getValue() {
-    const count = 0;
-    return count;
+    return this.props.user.bills.portion;
   }
 }
 

@@ -96,29 +96,54 @@ class App extends Component {
 
   handleUpdateBillPortion = (counter, user, portion) => {
     const newBillId = counter.id;
-    const newPortion = portion;
+    console.log("billID: ", newBillId);
+    console.log("Bills: ", this.state.counters);
+
+    var newPortion = portion;
+    if (!newPortion) {
+      newPortion = 0;
+    }
+    console.log("newPortion: ", newPortion);
+
     const newUser = user;
 
     const newRow = { billId: newBillId, portion: newPortion };
     const newUsers = this.state.users.slice();
     const userIndex = newUsers.indexOf(newUser);
 
-    var billIndex = 0;
+    console.log("userIndex", userIndex);
+
+    var billIndex = -1;
+
+    console.log("billIndex (before): ", billIndex);
 
     for (var i = 0; i < newUsers[userIndex].bills.length; i++) {
       if (newUsers[userIndex].bills[i].billId === newBillId) {
         billIndex = i;
+        console.log(
+          "Match!",
+          i,
+          newUsers[userIndex].bills[i].billId,
+          newBillId
+        );
+        newUsers[userIndex].bills[billIndex].portion = newPortion;
       } else {
-        billIndex = -1;
+        console.log(
+          "Failed to Match!",
+          i,
+          newUsers[userIndex].bills[i].billId,
+          newBillId
+        );
       }
     }
+    console.log("billIndex (after): ", billIndex);
 
-    if (billIndex !== -1) {
-      newUsers[userIndex].bills[billIndex].portion = newPortion;
-    } else {
+    if (billIndex === -1) {
       newUsers[userIndex].bills.push(newRow);
     }
+
     this.setState({ users: newUsers });
+    console.log("New users (portion):", newUsers);
     this.updateUserTotalBreakdownTaxTip(
       newUsers,
       this.state.totals[0].tax,
