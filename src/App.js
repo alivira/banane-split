@@ -71,7 +71,12 @@ class App extends Component {
     counters[index] = { ...counter };
     counters[index].name = e;
     this.setState({ counters });
-    this.updateUserTotalBreakdown();
+    this.updateUserTotalBreakdownValue(
+      this.state.users,
+      this.state.totals[0].tax,
+      this.state.totals[0].tip,
+      counters
+    );
   };
 
   handleUpdateBillQuantity = (counter, e) => {
@@ -80,7 +85,13 @@ class App extends Component {
     counters[index] = { ...counter };
     counters[index].quantity = e;
     this.setState({ counters });
-    this.updateUserTotalBreakdown();
+    console.log("Updated quantity", e);
+    this.updateUserTotalBreakdownValue(
+      this.state.users,
+      this.state.totals[0].tax,
+      this.state.totals[0].tip,
+      counters
+    );
   };
 
   handleUpdateBillPortion = (counter, user, portion) => {
@@ -108,7 +119,11 @@ class App extends Component {
       newUsers[userIndex].bills.push(newRow);
     }
     this.setState({ users: newUsers });
-    this.updateUserTotalBreakdown();
+    this.updateUserTotalBreakdownTaxTip(
+      newUsers,
+      this.state.totals[0].tax,
+      this.state.totals[0].tip
+    );
   };
 
   handleUpdateName = (user, name) => {
@@ -238,6 +253,7 @@ class App extends Component {
         if (user.bills[i].billId === bills[j].id) {
           total +=
             bills[j].value *
+            bills[j].quantity *
             (user.bills[i].portion / this.findPortionTotals(bills[j].id));
         }
       }
@@ -248,7 +264,7 @@ class App extends Component {
   calculateGlobalSubTotalValue = (counters) => {
     var count = 0;
     for (var i = 0, n = counters.length; i < n; i++) {
-      count += counters[i].value;
+      count += counters[i].quantity * counters[i].value;
       console.log("Global count:", count);
     }
 
@@ -277,6 +293,7 @@ class App extends Component {
         if (user.bills[i].billId === bills[j].id) {
           total +=
             bills[j].value *
+            bills[j].quantity *
             (user.bills[i].portion / this.findPortionTotals(bills[j].id));
         }
       }
@@ -314,7 +331,7 @@ class App extends Component {
   calculateGlobalSubTotal = () => {
     var count = 0;
     for (var i = 0, n = this.state.counters.length; i < n; i++) {
-      count += this.state.counters[i].value;
+      count += this.state.counters[i].value * this.state.counters[i].quantity;
     }
 
     return count;
