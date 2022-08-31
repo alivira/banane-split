@@ -191,25 +191,11 @@ class App extends Component {
     );
   };
 
-  //Updates the tax total, tip total, and grand total for users
-  updateUserTotalBreakdown = () => {
-    let newUsers = this.state.users;
-    for (let i = 0; i < newUsers.length; i++) {
-      newUsers[i].total = this.calculateUserSubTotal(newUsers[i]);
-      newUsers[i].tax = this.calculateUserTax(newUsers[i]);
-      newUsers[i].tip = this.calculateUserTip(newUsers[i]);
-      newUsers[i].grandTotal =
-        newUsers[i].tax + newUsers[i].tip + newUsers[i].total;
-      console.log(newUsers);
-    }
-    this.setState({ users: newUsers });
-  };
-
   updateUserTotalBreakdownTaxTip = (users, tax, tip) => {
     let newUsers = users;
     for (let i = 0; i < newUsers.length; i++) {
-      var ratio = Number(this.calculateUserRatio(newUsers[i]));
       newUsers[i].total = this.calculateUserSubTotal(newUsers[i]);
+      var ratio = Number(this.calculateUserRatio(newUsers[i]));
       newUsers[i].tax = Number(tax) * ratio;
       newUsers[i].tip = Number(tip) * ratio;
       newUsers[i].grandTotal =
