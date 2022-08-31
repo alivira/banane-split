@@ -8,10 +8,10 @@ import { v4 as uuidv4 } from "uuid";
 class App extends Component {
   state = {
     counters: [
-      { id: uuidv4(), value: 0 },
-      { id: uuidv4(), value: 0 },
-      { id: uuidv4(), value: 0 },
-      { id: uuidv4(), value: 0 },
+      { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+      { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+      { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+      { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
     ],
     users: [
       {
@@ -49,24 +49,41 @@ class App extends Component {
     this.setState({ counters });
   };
 
-  handleIncrement = (counter) => {
-    const counters = [...this.state.counters];
-    const index = counters.indexOf(counter);
-    counters[index] = { ...counter };
-    counters[index].value++;
-    this.setState({ counters });
-  };
-
-  handleUpdateValue = (counter, e) => {
+  handleUpdateBillValue = (counter, e) => {
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter };
     counters[index].value = e;
     this.setState({ counters });
-    this.updateBreakdown();
+    // this.updateUserTotalBreakdown();
+    this.updateUserTotalBreakdownValue(
+      this.state.users,
+      this.state.totals[0].tax,
+      this.state.totals[0].tip,
+      counters
+    );
+    console.log("Temp counters on Value: ", counters);
   };
 
-  handleUpdateBill = (counter, user, portion) => {
+  handleUpdateBillName = (counter, e) => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].name = e;
+    this.setState({ counters });
+    this.updateUserTotalBreakdown();
+  };
+
+  handleUpdateBillQuantity = (counter, e) => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].quantity = e;
+    this.setState({ counters });
+    this.updateUserTotalBreakdown();
+  };
+
+  handleUpdateBillPortion = (counter, user, portion) => {
     const newBillId = counter.id;
     const newPortion = portion;
     const newUser = user;
@@ -87,14 +104,11 @@ class App extends Component {
 
     if (billIndex !== -1) {
       newUsers[userIndex].bills[billIndex].portion = newPortion;
-      console.log("Bill updated!");
     } else {
       newUsers[userIndex].bills.push(newRow);
-      console.log("New bill line pushed!");
     }
     this.setState({ users: newUsers });
-    console.log("Updated users", this.state.users);
-    this.updateBreakdown();
+    this.updateUserTotalBreakdown();
   };
 
   handleUpdateName = (user, name) => {
@@ -102,15 +116,13 @@ class App extends Component {
     const newName = name;
     const newUsers = this.state.users.slice();
     const userIndex = newUsers.indexOf(newUser);
-    console.log("User Index", userIndex);
     newUsers[userIndex].name = newName;
     this.setState({ users: newUsers });
-    console.log("Updated user name", this.state.users);
   };
 
   handleAddRow = () => {
     const newId = uuidv4();
-    const newRow = { id: newId, value: 0 };
+    const newRow = { id: newId, value: 0, name: "name", quantity: 1 };
     const newArray = this.state.counters.slice();
     newArray.push(newRow);
     this.setState({ counters: newArray });
@@ -144,6 +156,11 @@ class App extends Component {
     this.setState({
       totals: update(this.state.totals, { 0: { tax: { $set: tax } } }),
     });
+    this.updateUserTotalBreakdownTaxTip(
+      this.state.users,
+      tax,
+      this.state.totals[0].tip
+    );
   };
 
   handleUpdateTip = (tip) => {
@@ -152,35 +169,93 @@ class App extends Component {
     this.setState({
       totals: update(this.state.totals, { 0: { tip: { $set: tip } } }),
     });
+    this.updateUserTotalBreakdownTaxTip(
+      this.state.users,
+      this.state.totals[0].tax,
+      tip
+    );
   };
 
-  calculateTotal = () => {
-    var count = 0;
-    for (var i = 0, n = this.state.counters.length; i < n; i++) {
-      count += this.state.counters[i].value;
-    }
-    return count;
-  };
-
-  finalTotal = () => {
-    var count = this.calculateTotal();
-    count +=
-      Number(this.state.totals[0].tax) + Number(this.state.totals[0].tip);
-
-    return count;
-  };
-
-  updateBreakdown = () => {
+  //Updates the tax total, tip total, and grand total for users
+  updateUserTotalBreakdown = () => {
     let newUsers = this.state.users;
     for (let i = 0; i < newUsers.length; i++) {
-      newUsers[i].total = this.calculateBreakdown(newUsers[i]);
+      newUsers[i].total = this.calculateUserSubTotal(newUsers[i]);
+      newUsers[i].tax = this.calculateUserTax(newUsers[i]);
+      newUsers[i].tip = this.calculateUserTip(newUsers[i]);
+      newUsers[i].grandTotal =
+        newUsers[i].tax + newUsers[i].tip + newUsers[i].total;
       console.log(newUsers);
     }
     this.setState({ users: newUsers });
-    this.calculateUserTaxTip();
-    console.log("User State (Update Breakdown)", this.state.users);
   };
 
+  updateUserTotalBreakdownTaxTip = (users, tax, tip) => {
+    let newUsers = users;
+    for (let i = 0; i < newUsers.length; i++) {
+      var ratio = Number(this.calculateUserRatio(newUsers[i]));
+      newUsers[i].total = this.calculateUserSubTotal(newUsers[i]);
+      newUsers[i].tax = Number(tax) * ratio;
+      newUsers[i].tip = Number(tip) * ratio;
+      newUsers[i].grandTotal =
+        newUsers[i].total + newUsers[i].tax + newUsers[i].tip;
+    }
+
+    this.setState({ users: newUsers });
+  };
+
+  updateUserTotalBreakdownValue = (users, tax, tip, counters) => {
+    let newUsers = users;
+    for (let i = 0; i < newUsers.length; i++) {
+      newUsers[i].total = this.calculateUserSubTotalValue(
+        newUsers[i],
+        counters
+      );
+      var ratio =
+        Number(newUsers[i].total) /
+        Number(this.calculateGlobalSubTotalValue(counters));
+      console.log("New Users total: ", newUsers[i].total);
+      console.log("New Users ratio: ", ratio);
+      console.log(
+        "Global Sub Total: ",
+        this.calculateGlobalSubTotalValue(counters)
+      );
+      newUsers[i].tax = Number(tax) * ratio;
+      newUsers[i].tip = Number(tip) * ratio;
+      newUsers[i].grandTotal =
+        newUsers[i].total + newUsers[i].tax + newUsers[i].tip;
+    }
+
+    this.setState({ users: newUsers });
+  };
+
+  calculateUserSubTotalValue = (user, counters) => {
+    var bills = counters;
+    var total = 0;
+
+    for (let i = 0; i < user.bills.length; i++) {
+      for (let j = 0; j < bills.length; j++) {
+        if (user.bills[i].billId === bills[j].id) {
+          total +=
+            bills[j].value *
+            (user.bills[i].portion / this.findPortionTotals(bills[j].id));
+        }
+      }
+    }
+    return total;
+  };
+
+  calculateGlobalSubTotalValue = (counters) => {
+    var count = 0;
+    for (var i = 0, n = counters.length; i < n; i++) {
+      count += counters[i].value;
+      console.log("Global count:", count);
+    }
+
+    return count;
+  };
+
+  //Finds the total portions (shares) for a bill item
   findPortionTotals = (billId) => {
     var total = 0;
     for (let i = 0; i < this.state.users.length; i++) {
@@ -189,54 +264,68 @@ class App extends Component {
           total += this.state.users[i].bills[j].portion;
         }
     }
-    console.log("Bill portion total: ", total);
     return total;
   };
 
-  calculateUserTaxTip = () => {
-    var ratio = 0;
-    var tax = 0;
-    var tip = 0;
-    var grandTotal = 0;
-    var newUsers = this.state.users.slice();
-
-    if ((this.state.totals[0].tax || this.state.totals[0].ti) !== 0)
-      for (let i = 0; i < this.state.users.length; i++) {
-        ratio =
-          Number(this.state.users[i].total) / Number(this.calculateTotal());
-        tax = Number(this.state.totals[0].tax) * ratio;
-        tip = Number(this.state.totals[0].tip) * ratio;
-        grandTotal = Number(this.state.users[i].total) + tax + tip;
-        newUsers[i].tax = tax;
-        newUsers[i].tip = tip;
-        newUsers[i].grandTotal = grandTotal;
-
-        this.setState({ users: newUsers });
-      }
-  };
-
-  calculateBreakdown = (user) => {
+  //Finds the total owed without tax & tip per user
+  calculateUserSubTotal = (user) => {
     var bills = this.state.counters.slice();
     var total = 0;
 
     for (let i = 0; i < user.bills.length; i++) {
-      var sampleBill = user.bills[i].billId;
-      var billIndex = -1;
-
-      for (var finder = 0; finder < bills.length; finder++) {
-        if (bills[finder].id === sampleBill) {
-          billIndex = finder;
-          console.log("MATCHED");
-          if (billIndex !== -1) {
-            total +=
-              bills[billIndex].value *
-              (user.bills[i].portion /
-                this.findPortionTotals(bills[billIndex].id));
-          }
+      for (let j = 0; j < bills.length; j++) {
+        if (user.bills[i].billId === bills[j].id) {
+          total +=
+            bills[j].value *
+            (user.bills[i].portion / this.findPortionTotals(bills[j].id));
         }
       }
     }
     return total;
+  };
+
+  //Finds the total tax owed per user
+  calculateUserTax = (user) => {
+    var ratio = 0;
+    var tax = 0;
+
+    ratio = Number(user.total) / Number(this.calculateGlobalSubTotal());
+    tax = Number(this.state.totals[0].tax) * ratio;
+
+    return tax;
+  };
+
+  //Finds the total tax owed per user
+  calculateUserTip = (user) => {
+    var ratio = 0;
+    var tip = 0;
+
+    ratio = Number(user.total) / Number(this.calculateGlobalSubTotal());
+    tip = Number(this.state.totals[0].tip) * ratio;
+
+    return tip;
+  };
+
+  calculateUserRatio = (user) => {
+    return Number(user.total) / Number(this.calculateGlobalSubTotal());
+  };
+
+  //Calculates global subtotal
+  calculateGlobalSubTotal = () => {
+    var count = 0;
+    for (var i = 0, n = this.state.counters.length; i < n; i++) {
+      count += this.state.counters[i].value;
+    }
+
+    return count;
+  };
+
+  //Calculates global grand total
+  calculateGlobalGrandTotal = () => {
+    var count = this.calculateGlobalSubTotal();
+    count +=
+      Number(this.state.totals[0].tax) + Number(this.state.totals[0].tip);
+    return count;
   };
 
   render() {
@@ -244,24 +333,25 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <NavBar totalCounters={this.calculateTotal()} />
+        <NavBar totalCounters={this.calculateGlobalSubTotal()} />
         <main className="container">
           <Counters
             counters={this.state.counters}
             users={this.state.users}
             totals={this.state.totals}
             onReset={this.handleReset}
-            onIncrement={this.handleIncrement}
             onDelete={this.handleDelete}
             onAddRow={this.handleAddRow}
             onAddUser={this.handleAddUser}
-            updateValue={this.handleUpdateValue}
-            updateBill={this.handleUpdateBill}
+            updateValue={this.handleUpdateBillValue}
+            updateBillName={this.handleUpdateBillName}
+            updateBillQuantity={this.handleUpdateBillQuantity}
+            updateBill={this.handleUpdateBillPortion}
             updateName={this.handleUpdateName}
             updateTax={this.handleUpdateTax}
             updateTip={this.handleUpdateTip}
-            subtotal={this.calculateTotal()}
-            grandtotal={this.finalTotal()}
+            subtotal={this.calculateGlobalSubTotal()}
+            grandtotal={this.calculateGlobalGrandTotal()}
           />
         </main>
       </React.Fragment>

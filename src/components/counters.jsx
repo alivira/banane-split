@@ -15,10 +15,11 @@ class Counters extends Component {
       onAddRow,
       onReset,
       onDelete,
-      onIncrement,
       onAddUser,
       updateValue,
       updateBill,
+      updateBillName,
+      updateBillQuantity,
       updateTax,
       updateTip,
       grandtotal,
@@ -70,7 +71,7 @@ class Counters extends Component {
               </IconButton>
             </div>
 
-            <div style={{ paddingRight: "40px" }}>
+            <div style={{ paddingRight: "218px" }}>
               <IconButton color="primary" onClick={onAddUser}>
                 <PersonAddIcon />
               </IconButton>
@@ -90,9 +91,10 @@ class Counters extends Component {
             <Counter
               key={counter.id}
               onDelete={onDelete}
-              onIncrement={onIncrement}
               updateValue={updateValue}
               updateBill={updateBill}
+              updateBillName={updateBillName}
+              updateBillQuantity={updateBillQuantity}
               counter={counter}
               users={users}
             ></Counter>

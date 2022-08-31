@@ -7,9 +7,33 @@ class Counter extends Component {
       <div>
         <div className="row">
           <form>
+            # &nbsp;
             <input
               type="number"
+              style={{ fontWeight: "200", width: "60px" }}
+              required
+              value={this.getQuantity()}
+              onChange={(e) =>
+                this.props.updateBillQuantity(
+                  this.props.counter,
+                  Number(e.target.value)
+                )
+              }
+            ></input>
+            &nbsp;
+            <input
+              type="string"
               style={{ fontWeight: "200", width: "190px" }}
+              required
+              value={this.getName()}
+              onChange={(e) =>
+                this.props.updateBillName(this.props.counter, e.target.value)
+              }
+            ></input>
+            &nbsp; &nbsp; $ &nbsp;
+            <input
+              type="number"
+              style={{ fontWeight: "200", width: "60px" }}
               required
               value={this.getValue()}
               onChange={(e) =>
@@ -46,6 +70,14 @@ class Counter extends Component {
   getValue() {
     const { value: count } = this.props.counter;
     return count;
+  }
+
+  getName() {
+    return this.props.counter.name;
+  }
+
+  getQuantity() {
+    return this.props.counter.quantity;
   }
 
   getBadgeClasses() {
