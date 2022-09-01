@@ -56,7 +56,7 @@ class Counter extends Component {
           ></img>
 
           {this.props.users.map((user) => (
-            <div className="col">
+            <div className="col" style={{ columnWidth: "50px" }}>
               <User
                 user={user}
                 counter={this.props.counter}
