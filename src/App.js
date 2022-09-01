@@ -42,11 +42,38 @@ class App extends Component {
   };
 
   handleReset = () => {
-    const counters = this.state.counters.map((c) => {
-      c.value = 0;
-      return c;
-    });
-    this.setState({ counters });
+    const resetState = {
+      counters: [
+        { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+        { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+        { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+        { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+      ],
+      users: [
+        {
+          id: uuidv4(),
+          name: "Name",
+          total: 0,
+          tax: 0,
+          tip: 0,
+          grandTotal: 0,
+          bills: [{ billId: "sample", portion: 0 }],
+        },
+      ],
+      totals: [
+        {
+          subTotal: 0,
+          grandTotal: 0,
+          tax: 0,
+          taxRatio: 0,
+          tip: 0,
+          tipRatio: 0,
+        },
+      ],
+    };
+    this.setState({ counters: resetState.counters });
+    this.setState({ users: resetState.users });
+    this.setState({ totals: resetState.totals });
   };
 
   handleUpdateBillValue = (counter, e) => {
