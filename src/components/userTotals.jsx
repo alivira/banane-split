@@ -5,18 +5,35 @@ class UserTotal extends Component {
     return (
       <div className="col" style={{ paddingTop: "10px" }}>
         <form>
-          {/* Tax */}
           <div className="row">
             <h4>{this.props.user.name}</h4>
           </div>
+          {/* SubTotal */}
+          <div className="row">
+            <div className="col">
+              <label>Subtotal</label>
+            </div>
+            <div className="col">
+              <input
+                className="total"
+                name="Subtotal"
+                style={{ backgroundColor: "#f0f8ff", borderRadius: "5px" }}
+                type="number"
+                value={this.props.user.total.toFixed(2)}
+                required
+              ></input>
+            </div>
+          </div>
+          {/* Tax */}
           <div className="row">
             <div className="col">
               <label>Tax</label>
             </div>
             <div className="col">
               <input
+                className="total"
                 name="Tax"
-                style={{ backgroundColor: "#EFEFEF" }}
+                style={{ backgroundColor: "#f0f8ff" }}
                 type="number"
                 value={this.props.user.tax.toFixed(2)}
                 required
@@ -30,14 +47,16 @@ class UserTotal extends Component {
             </div>
             <div className="col">
               <input
+                className="total"
                 name="Tip"
-                style={{ backgroundColor: "#EFEFEF" }}
+                style={{ backgroundColor: "#f0f8ff" }}
                 type="number"
                 value={this.props.user.tip.toFixed(2)}
                 required
               ></input>
             </div>
           </div>
+          <div style={{ paddingTop: "5px" }}></div>
           {/* GrandTotal */}
           <div className="row">
             <div className="col">
@@ -45,6 +64,7 @@ class UserTotal extends Component {
             </div>
             <div className="col">
               <input
+                className="total"
                 name="GrandTotal"
                 style={{ backgroundColor: "lightgreen" }}
                 type="number"

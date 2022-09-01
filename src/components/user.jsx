@@ -6,6 +6,7 @@ class User extends Component {
       <div>
         <form>
           <input
+            className="shares"
             type="number"
             required
             value={this.getValue()}

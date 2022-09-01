@@ -47,7 +47,6 @@ class Counters extends Component {
                 style={{
                   fontSize: "15pt",
                   fontWeight: "400",
-                  marginLeft: "-15px",
                 }}
               >
                 Line Items
@@ -60,7 +59,7 @@ class Counters extends Component {
           </div>
 
           <div className="row" style={{ paddingBottom: "15px" }}>
-            <div style={{ paddingRight: "65px" }}>
+            <div style={{ paddingRight: "250px", paddingLeft: "15px" }}>
               <IconButton color="primary" onClick={onReset}>
                 <RestartAltIcon />
               </IconButton>
@@ -71,7 +70,7 @@ class Counters extends Component {
               </IconButton>
             </div>
 
-            <div style={{ paddingRight: "218px" }}>
+            <div style={{ paddingRight: "33px" }}>
               <IconButton color="primary" onClick={onAddUser}>
                 <PersonAddIcon />
               </IconButton>
@@ -87,18 +86,20 @@ class Counters extends Component {
             ))}
           </div>
 
-          {counters.map((counter) => (
-            <Counter
-              key={counter.id}
-              onDelete={onDelete}
-              updateValue={updateValue}
-              updateBill={updateBill}
-              updateBillName={updateBillName}
-              updateBillQuantity={updateBillQuantity}
-              counter={counter}
-              users={users}
-            ></Counter>
-          ))}
+          <div style={{ paddingLeft: "15px" }}>
+            {counters.map((counter) => (
+              <Counter
+                key={counter.id}
+                onDelete={onDelete}
+                updateValue={updateValue}
+                updateBill={updateBill}
+                updateBillName={updateBillName}
+                updateBillQuantity={updateBillQuantity}
+                counter={counter}
+                users={users}
+              ></Counter>
+            ))}
+          </div>
 
           <div style={{ paddingTop: "30px", marginLeft: "-15px" }}>
             <LineTotal

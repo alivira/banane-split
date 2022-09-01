@@ -8,8 +8,9 @@ class UserName extends Component {
       <div>
         <form>
           <input
+            className="names"
             type="string"
-            style={{ fontWeight: "200", width: "160px" }}
+            style={{ width: "160px" }}
             required
             value={this.getName()}
             onChange={(e) =>

@@ -9,6 +9,7 @@ class Counter extends Component {
           <form>
             # &nbsp;
             <input
+              className="quantity"
               type="number"
               style={{ fontWeight: "200", width: "60px" }}
               required
@@ -32,6 +33,7 @@ class Counter extends Component {
             ></input>
             &nbsp; &nbsp; $ &nbsp;
             <input
+              className="quantity"
               type="number"
               style={{ fontWeight: "200", width: "60px" }}
               required
@@ -54,7 +56,7 @@ class Counter extends Component {
           ></img>
 
           {this.props.users.map((user) => (
-            <div className="col" style={{ columnWidth: "50px" }}>
+            <div className="col">
               <User
                 user={user}
                 counter={this.props.counter}

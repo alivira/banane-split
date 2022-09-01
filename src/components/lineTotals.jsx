@@ -11,8 +11,9 @@ class LineTotal extends Component {
             </div>
             <div className="col">
               <input
+                className="total"
                 name="subtotal"
-                style={{ backgroundColor: "#EFEFEF" }}
+                style={{ backgroundColor: "#f0f8ff" }}
                 type="number"
                 value={this.props.subtotal.toFixed(2)}
                 required
@@ -26,6 +27,7 @@ class LineTotal extends Component {
             </div>
             <div className="col">
               <input
+                className="total"
                 name="tax"
                 type="number"
                 value={this.getTax()}
@@ -41,6 +43,7 @@ class LineTotal extends Component {
             </div>
             <div className="col">
               <input
+                className="total"
                 name="tip"
                 type="number"
                 value={this.getTip()}
@@ -49,6 +52,7 @@ class LineTotal extends Component {
               ></input>
             </div>
           </div>
+          <div style={{ paddingTop: "5px" }}></div>
 
           <div className="row">
             <div className="col">
@@ -56,6 +60,7 @@ class LineTotal extends Component {
             </div>
             <div className="col">
               <input
+                className="total"
                 style={{ backgroundColor: "#EFEFEF" }}
                 value={this.props.grandtotal.toFixed(2)}
                 name="grandtotal"

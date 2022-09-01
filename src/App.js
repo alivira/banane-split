@@ -50,10 +50,11 @@ class App extends Component {
   };
 
   handleUpdateBillValue = (counter, e) => {
+    var input = this.preventNegative(e);
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter };
-    counters[index].value = e;
+    counters[index].value = input;
     this.setState({ counters });
     // this.updateUserTotalBreakdown();
     this.updateUserTotalBreakdownValue(
@@ -80,12 +81,13 @@ class App extends Component {
   };
 
   handleUpdateBillQuantity = (counter, e) => {
+    var input = this.preventNegative(e);
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter };
-    counters[index].quantity = e;
+    counters[index].quantity = input;
     this.setState({ counters });
-    console.log("Updated quantity", e);
+    console.log("Updated quantity", input);
     this.updateUserTotalBreakdownValue(
       this.state.users,
       this.state.totals[0].tax,
@@ -99,7 +101,7 @@ class App extends Component {
     console.log("billID: ", newBillId);
     console.log("Bills: ", this.state.counters);
 
-    var newPortion = portion;
+    var newPortion = this.preventNegative(portion);
     if (!newPortion) {
       newPortion = 0;
     }
@@ -261,7 +263,10 @@ class App extends Component {
 
     for (let i = 0; i < user.bills.length; i++) {
       for (let j = 0; j < bills.length; j++) {
-        if (user.bills[i].billId === bills[j].id) {
+        if (
+          user.bills[i].billId === bills[j].id &&
+          this.findPortionTotals(bills[j].id) > 0
+        ) {
           total +=
             bills[j].value *
             bills[j].quantity *
@@ -301,7 +306,10 @@ class App extends Component {
 
     for (let i = 0; i < user.bills.length; i++) {
       for (let j = 0; j < bills.length; j++) {
-        if (user.bills[i].billId === bills[j].id) {
+        if (
+          user.bills[i].billId === bills[j].id &&
+          this.findPortionTotals(bills[j].id) > 0
+        ) {
           total +=
             bills[j].value *
             bills[j].quantity *
@@ -354,6 +362,10 @@ class App extends Component {
     count +=
       Number(this.state.totals[0].tax) + Number(this.state.totals[0].tip);
     return count;
+  };
+
+  preventNegative = (input) => {
+    return input < 0 ? 0 : input;
   };
 
   render() {

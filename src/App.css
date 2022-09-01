@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+input{
+  border-radius: 5px;
+}
+
+input.total{
+  text-align: right;
+}
+
+input.quantity{
+  text-align: right;
+}
+
+input.shares{
+  text-align: center;
+}
+
+input.names{
+  text-align: center;
+  font-weight: 500;
+}
