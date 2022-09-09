@@ -72,6 +72,8 @@ class Counters extends Component {
             ))}
             </Row>
 
+            <div style={{marginBottom:"8px"}}>
+
             {counters.map((counter) => (
               <Counter
                 key={counter.id}
@@ -84,8 +86,10 @@ class Counters extends Component {
                 users={users}
               ></Counter>
             ))}
+            </div>
 
           </Container>
+          
 
 
           <div style={{ paddingTop: "30px", marginLeft: "-15px" }}>
