@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import close from "../images/circle-xmark-solid.svg";
 import User from "./user";
+import Grid from '@mui/material/Grid';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
 class Counter extends Component {
   render() {
     return (
-      <div>
-        <div className="row">
-          <form>
+        <Row style={{flexWrap:"nowrap"}}>
+        <Col xs="auto">
             # &nbsp;
             <input
               className="quantity"
@@ -21,7 +26,8 @@ class Counter extends Component {
                 )
               }
             ></input>
-            &nbsp;
+            </Col>
+            <Col  xs="auto">
             <input
               type="string"
               style={{ fontWeight: "200", width: "190px" }}
@@ -31,7 +37,10 @@ class Counter extends Component {
                 this.props.updateBillName(this.props.counter, e.target.value)
               }
             ></input>
-            &nbsp; &nbsp; $ &nbsp;
+            </Col>
+
+            <Col  xs="auto">
+              $ &nbsp;
             <input
               className="quantity"
               type="number"
@@ -45,27 +54,29 @@ class Counter extends Component {
                 )
               }
             ></input>
-          </form>
+          </Col>
 
+
+          <Col  xs="auto">
           <img
             src={close}
-            style={{ width: "15px", fill: "white", margin: "10px" }}
+            style={{ width: "15px", fill: "white", margin: "10px", marginLeft:"-10px" }}
             onClick={() => this.props.onDelete(this.props.counter.id)}
             type="button"
             alt="remove line entry"
           ></img>
+          </Col>
 
           {this.props.users.map((user) => (
-            <div className="col" style={{ columnWidth: "50px" }}>
+            <Col>
               <User
                 user={user}
                 counter={this.props.counter}
                 updateBill={this.props.updateBill}
               ></User>
-            </div>
+            </Col>
           ))}
-        </div>
-      </div>
+        </Row>
     );
   }
 

@@ -5,20 +5,18 @@ class UserName extends Component {
     console.log(this.props.counter);
     console.log(this.props.users);
     return (
-      <div>
-        <form>
+
           <input
             className="names"
             type="string"
-            style={{ width: "160px" }}
+            style={{ width: "80px" }}
             required
             value={this.getName()}
             onChange={(e) =>
               this.props.updateName(this.props.user, e.target.value)
             }
           ></input>
-        </form>
-      </div>
+
     );
   }
 

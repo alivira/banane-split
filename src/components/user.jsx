@@ -3,14 +3,12 @@ import React, { Component } from "react";
 class User extends Component {
   render() {
     return (
-      <div>
-        <form>
           <input
             className="shares"
             type="number"
             required
             value={this.getValue()}
-            style={{ fontWeight: "200", width: "160px" }}
+            style={{ fontWeight: "200", width: "80px" }}
             onChange={(e) =>
               this.props.updateBill(
                 this.props.counter,
@@ -19,8 +17,6 @@ class User extends Component {
               )
             }
           ></input>
-        </form>
-      </div>
     );
   }
 

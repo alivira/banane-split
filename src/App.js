@@ -4,6 +4,12 @@ import Counters from "./components/counters";
 import update from "immutability-helper";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+  crossorigin="anonymous"
+/>
 
 class App extends Component {
   state = {
@@ -191,7 +197,7 @@ class App extends Component {
 
   handleAddRow = () => {
     const newId = uuidv4();
-    const newRow = { id: newId, value: 0, name: "name", quantity: 1 };
+    const newRow = { id: newId, value: 0, name: "", quantity: 1 };
     const newArray = this.state.counters.slice();
     newArray.push(newRow);
     this.setState({ counters: newArray });

@@ -7,6 +7,11 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import IconButton from "@mui/material/IconButton";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import Grid from '@mui/material/Grid';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 class Counters extends Component {
@@ -40,53 +45,33 @@ class Counters extends Component {
     return (
       <div>
         <ThemeProvider theme={theme}>
-          <div className="row" style={{ paddingTop: "60px" }}>
-            <div className="col">
-              {" "}
-              <p
-                style={{
-                  fontSize: "15pt",
-                  fontWeight: "400",
-                }}
-              >
-                Line Items
-              </p>
-            </div>
-            <div className="col">
-              {" "}
-              <p style={{ fontSize: "15pt", fontWeight: "400" }}>Shares</p>
-            </div>
-          </div>
-
-          <div className="row" style={{ paddingBottom: "15px" }}>
-            <div style={{ paddingRight: "250px", paddingLeft: "15px" }}>
+          <Container style={{overflowX:"scroll"}}>
+            <Row  style={{flexWrap:"nowrap"}}>
+            <Col  xs="auto" style={{ paddingRight: "250px", paddingLeft: "15px" }}>
               <IconButton color="primary" onClick={onReset}>
                 <RestartAltIcon />
               </IconButton>
-            </div>
-            <div>
+            </Col>
+            <Col  xs="auto" >
               <IconButton color="primary" onClick={onAddRow}>
                 <PostAddIcon />
               </IconButton>
-            </div>
+            </Col>
 
-            <div style={{ paddingRight: "33px" }}>
+            <Col  xs="auto"style={{ paddingRight: "50px" }}>
               <IconButton color="primary" onClick={onAddUser}>
                 <PersonAddIcon />
               </IconButton>
-            </div>
+            </Col>
 
             {this.props.users.map((user) => (
-              <div
-                className="col"
-                style={{ width: "50px", paddingTop: "10px" }}
+              <Col
               >
                 <UserName user={user} updateName={updateName}></UserName>
-              </div>
+              </Col>
             ))}
-          </div>
+            </Row>
 
-          <div style={{ paddingLeft: "15px" }}>
             {counters.map((counter) => (
               <Counter
                 key={counter.id}
@@ -99,7 +84,9 @@ class Counters extends Component {
                 users={users}
               ></Counter>
             ))}
-          </div>
+
+          </Container>
+
 
           <div style={{ paddingTop: "30px", marginLeft: "-15px" }}>
             <LineTotal
