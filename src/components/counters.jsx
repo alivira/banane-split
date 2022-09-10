@@ -118,7 +118,7 @@ class Counters extends Component {
             <Row style={{ flexWrap: "nowrap" }}>
               <Col
                 xs="auto"
-                style={{ marginLeft: "50px", marginRight: "55px" }}
+                style={{ marginLeft: "50px", marginRight: "53px" }}
               >
                 <LineTotal
                   totals={totals}
