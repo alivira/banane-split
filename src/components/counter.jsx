@@ -1,18 +1,15 @@
 import React, { Component } from "react";
 import close from "../images/circle-xmark-solid.svg";
 import User from "./user";
-import Grid from '@mui/material/Grid';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 class Counter extends Component {
   render() {
     return (
-        <Row style={{flexWrap:"nowrap"}}>
+      <Row style={{ flexWrap: "nowrap" }}>
         <Col xs="auto">
-        <div className="quantity" style={{fontWeight:'200'}}>
+          <div className="quantity" style={{ fontWeight: "200" }}>
             <input
               className="quantity"
               type="number"
@@ -26,23 +23,22 @@ class Counter extends Component {
                 )
               }
             ></input>
-            </div>
-            </Col>
-            <Col  xs="auto">
-            <input
-              type="string"
-              style={{ fontWeight: "200", width: "190px" }}
-              required
-              value={this.getName()}
-              onChange={(e) =>
-                this.props.updateBillName(this.props.counter, e.target.value)
-              }
-            ></input>
-            </Col>
+          </div>
+        </Col>
+        <Col xs="auto">
+          <input
+            type="string"
+            style={{ fontWeight: "200", width: "190px" }}
+            required
+            value={this.getName()}
+            onChange={(e) =>
+              this.props.updateBillName(this.props.counter, e.target.value)
+            }
+          ></input>
+        </Col>
 
-            <Col  xs="auto">
-              <div className="money"  style={{ fontWeight:'200'}}>
-
+        <Col xs="auto">
+          <div className="money" style={{ fontWeight: "200" }}>
             <input
               className="quantity"
               type="number"
@@ -56,30 +52,34 @@ class Counter extends Component {
                 )
               }
             ></input>
-            </div>
-          </Col>
+          </div>
+        </Col>
 
-
-          <Col  xs="auto">
+        <Col xs="auto">
           <img
             src={close}
-            style={{ width: "15px", fill: "white", margin: "10px", marginLeft:"-10px" }}
+            style={{
+              width: "15px",
+              fill: "white",
+              margin: "10px",
+              marginLeft: "-10px",
+            }}
             onClick={() => this.props.onDelete(this.props.counter.id)}
             type="button"
             alt="remove line entry"
           ></img>
-          </Col>
+        </Col>
 
-          {this.props.users.map((user) => (
-            <Col>
-              <User
-                user={user}
-                counter={this.props.counter}
-                updateBill={this.props.updateBill}
-              ></User>
-            </Col>
-          ))}
-        </Row>
+        {this.props.users.map((user) => (
+          <Col>
+            <User
+              user={user}
+              counter={this.props.counter}
+              updateBill={this.props.updateBill}
+            ></User>
+          </Col>
+        ))}
+      </Row>
     );
   }
 

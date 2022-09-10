@@ -45,6 +45,12 @@ class App extends Component {
   handleDelete = (counterId) => {
     const counters = this.state.counters.filter((c) => c.id !== counterId);
     this.setState({ counters });
+    this.updateUserTotalBreakdownValue(
+      this.state.users,
+      this.state.totals[0].tax,
+      this.state.totals[0].tip,
+      counters
+    );
   };
 
   handleReset = () => {
