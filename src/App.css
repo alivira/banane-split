@@ -54,6 +54,8 @@
 
 input{
   border-radius: 5px;
+  background-color: #EFEFEF;
+  border-width: 0px;
 }
 
 input.total{

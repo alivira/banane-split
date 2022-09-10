@@ -61,7 +61,7 @@ class LineTotal extends Component {
             <div className="col">
               <input
                 className="total"
-                style={{ backgroundColor: "#EFEFEF" }}
+                style={{ backgroundColor: "#f0f8ff" }}
                 value={this.props.grandtotal.toFixed(2)}
                 name="grandtotal"
                 type="number"

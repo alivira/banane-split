@@ -46,6 +46,11 @@ class Counters extends Component {
       <div>
         <ThemeProvider theme={theme}>
           <Container style={{overflowX:"scroll"}}>
+            <Row style={{marginBottom:"10px"}}>
+              <Col xs={4}><h6 style={{textAlign:"center", color:"grey", fontWeight:"400"}}>Line Items</h6></Col>
+              <Col xs={8}><h6 style={{textAlign:"center", color:"grey",fontWeight:"400"}}>Shares</h6></Col>
+            </Row>
+
             <Row  style={{flexWrap:"nowrap"}}>
             <Col  xs="auto" style={{ paddingRight: "250px", paddingLeft: "15px" }}>
               <IconButton color="primary" onClick={onReset}>
@@ -92,7 +97,7 @@ class Counters extends Component {
           
 
 
-          <div style={{ paddingTop: "30px", marginLeft: "-15px" }}>
+          <div style={{ paddingTop: "30px", marginLeft: "35px" }}>
             <LineTotal
               totals={totals}
               counter={counters}
@@ -104,7 +109,7 @@ class Counters extends Component {
           </div>
 
           {this.props.users.map((user) => (
-            <div className="col" style={{ width: "400px", paddingTop: "10px" }}>
+            <div className="col" style={{ width: "400px", paddingTop: "10px", marginLeft: "50px" }}>
               <UserTotal user={user}></UserTotal>
             </div>
           ))}

@@ -456,6 +456,28 @@ class App extends Component {
               />
             </a>
           </div>
+
+          <div
+            style={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: "30px",
+              marginBottom: "30px",
+              padding: "10px",
+              width: "200px",
+            }}
+          >
+            <p style={{ textAlign: "center", fontWeight: "200" }}>
+            
+              <a
+                style={{ color: "#FEB83E", fontWeight: "400" }}
+                href="https://github.com/alivira/banane-split"
+                target="_blank"
+              >
+                contribute
+              </a>
+            </p>
+          </div>
         </main>
       </React.Fragment>
     );
