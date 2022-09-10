@@ -1,15 +1,20 @@
 import React, { Component } from "react";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 class LineTotal extends Component {
   state = {};
   render() {
     return (
-      <div className="col" style={{ width: "400px" }}>
-        <form>
-          <div className="row">
-            <div className="col">
+      <Container>
+          <Row xs="auto"  style={{flexWrap:"nowrap"}}>
+            <Col  xs={5}>
               <label>Subtotal</label>
-            </div>
-            <div className="col">
+            </Col>
+            <Col>
+            <div className="money"   style={{fontWeight:'200'}}>
+
               <input
                 className="total"
                 name="subtotal"
@@ -18,14 +23,17 @@ class LineTotal extends Component {
                 value={this.props.subtotal.toFixed(2)}
                 required
               ></input>
-            </div>
-          </div>
+              </div>
+            </Col>
+          </Row>
 
-          <div className="row">
-            <div className="col">
+          <Row xs="auto"  style={{flexWrap:"nowrap"}}>
+            <Col  xs={5}>
               <label>Tax</label>
-            </div>
-            <div className="col">
+            </Col>
+            <Col className="col">
+            <div className="money"  style={{fontWeight:'200'}}>
+
               <input
                 className="total"
                 name="tax"
@@ -34,14 +42,16 @@ class LineTotal extends Component {
                 required
                 onChange={(e) => this.props.updateTax(Number(e.target.value))}
               ></input>
-            </div>
-          </div>
+              </div>
+            </Col>
+          </Row>
 
-          <div className="row">
-            <div className="col">
+          <Row xs="auto"  style={{flexWrap:"nowrap"}}>
+            <Col  xs={5}>
               <label>Tip</label>
-            </div>
-            <div className="col">
+            </Col>
+            <Col>
+            <div className="money"  style={{fontWeight:'200'}}>
               <input
                 className="total"
                 name="tip"
@@ -50,27 +60,29 @@ class LineTotal extends Component {
                 required
                 onChange={(e) => this.props.updateTip(Number(e.target.value))}
               ></input>
-            </div>
-          </div>
+              </div>
+            </Col>
+          </Row>
           <div style={{ paddingTop: "5px" }}></div>
 
-          <div className="row">
-            <div className="col">
+          <Row xs="auto" style={{flexWrap:"nowrap"}}>
+            <Col xs={5}>
               <label>Grand Total</label>
-            </div>
-            <div className="col">
+            </Col>
+            <Col>
+            <div className="money"  style={{fontWeight:'200'}}>
               <input
                 className="total"
-                style={{ backgroundColor: "#efefef" }}
+                style={{ backgroundColor: this.isZero() ?  "#FEF8D1" : "lightgreen"}}
                 value={this.props.grandtotal.toFixed(2)}
                 name="grandtotal"
                 type="number"
                 required
               ></input>
-            </div>
-          </div>
-        </form>
-      </div>
+              </div>
+            </Col>
+          </Row>
+      </Container>
     );
   }
 
@@ -82,6 +94,17 @@ class LineTotal extends Component {
   getTip() {
     const { tip } = this.props.totals;
     return tip;
+  }
+
+
+  isZero() {
+    const total = Number(this.props.grandtotal.toFixed(2))
+    if (total === 0) {
+      return true
+    }
+    else{
+      return false
+    }
   }
 }
 

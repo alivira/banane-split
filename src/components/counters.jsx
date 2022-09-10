@@ -7,7 +7,6 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import IconButton from "@mui/material/IconButton";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import Grid from '@mui/material/Grid';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -46,7 +45,7 @@ class Counters extends Component {
       <div>
         <ThemeProvider theme={theme}>
           <Container style={{overflowX:"scroll"}}>
-            <Row style={{marginBottom:"10px"}}>
+            <Row style={{marginBottom:"10px", flexWrap:"nowrap"}}>
               <Col xs={4}><h6 style={{textAlign:"center", color:"grey", fontWeight:"400"}}>Line Items</h6></Col>
               <Col xs={8}><h6 style={{textAlign:"center", color:"grey",fontWeight:"400"}}>Shares</h6></Col>
             </Row>
@@ -63,7 +62,7 @@ class Counters extends Component {
               </IconButton>
             </Col>
 
-            <Col  xs="auto"style={{ paddingRight: "50px" }}>
+            <Col  xs="auto" style={{ marginRight: "30px" }}>
               <IconButton color="primary" onClick={onAddUser}>
                 <PersonAddIcon />
               </IconButton>
@@ -93,11 +92,11 @@ class Counters extends Component {
             ))}
             </div>
 
-          </Container>
           
+            <div style={{ marginTop: "30px"}}> </div>
 
-
-          <div style={{ paddingTop: "30px", marginLeft: "35px" }}>
+         <Row  style={{flexWrap:"nowrap"}}> 
+          <Col xs="auto" style={{marginLeft: "50px", marginRight: "55px"  }}>
             <LineTotal
               totals={totals}
               counter={counters}
@@ -106,13 +105,21 @@ class Counters extends Component {
               updateTip={updateTip}
               grandtotal={grandtotal}
             />
-          </div>
+         
 
+          </Col>
           {this.props.users.map((user) => (
-            <div className="col" style={{ width: "400px", paddingTop: "10px", marginLeft: "50px" }}>
+                      <Col style ={{marginLeft:"0"}}>
+
               <UserTotal user={user}></UserTotal>
-            </div>
+              </Col>
+
           ))}
+
+
+</Row>
+</Container>
+
         </ThemeProvider>
       </div>
     );

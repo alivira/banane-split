@@ -8,7 +8,7 @@ class User extends Component {
             type="number"
             required
             value={this.getValue()}
-            style={{ fontWeight: "200", width: "80px" }}
+            style={{ fontWeight: "200", width: "90px" }}
             onChange={(e) =>
               this.props.updateBill(
                 this.props.counter,

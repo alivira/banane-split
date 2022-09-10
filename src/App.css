@@ -62,6 +62,12 @@ input.total{
   text-align: right;
 }
 
+input.usertotal{
+  text-align: right;
+  width: 80px;
+}
+
+
 input.quantity{
   text-align: right;
 }
@@ -74,3 +80,37 @@ input.names{
   text-align: center;
   font-weight: 500;
 }
+
+div.money{
+  position:relative;
+  font-weight: '200';
+  color: 'lightgrey'
+  }
+  
+  div.money input{
+    padding-left: 15px;
+  }
+  
+  div.money:after{
+  position: absolute;
+      left: 6px;
+      top: 1px;
+      content: '$';
+  }
+
+  div.quantity{
+    position:relative;
+    font-weight: '200';
+    color: 'lightgrey'
+    }
+    
+    div.quantity input{
+      padding-left: 15px;
+    }
+    
+    div.quantity:after{
+    position: absolute;
+        left: 6px;
+        top: 1px;
+        content: '#';
+    }

@@ -9,7 +9,7 @@ class UserName extends Component {
           <input
             className="names"
             type="string"
-            style={{ width: "80px" }}
+            style={{ width: "90px" }}
             required
             value={this.getName()}
             onChange={(e) =>

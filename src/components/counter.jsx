@@ -12,7 +12,7 @@ class Counter extends Component {
     return (
         <Row style={{flexWrap:"nowrap"}}>
         <Col xs="auto">
-            # &nbsp;
+        <div className="quantity" style={{fontWeight:'200'}}>
             <input
               className="quantity"
               type="number"
@@ -26,6 +26,7 @@ class Counter extends Component {
                 )
               }
             ></input>
+            </div>
             </Col>
             <Col  xs="auto">
             <input
@@ -40,11 +41,12 @@ class Counter extends Component {
             </Col>
 
             <Col  xs="auto">
-              $ &nbsp;
+              <div className="money"  style={{ fontWeight:'200'}}>
+
             <input
               className="quantity"
               type="number"
-              style={{ fontWeight: "200", width: "60px" }}
+              style={{ fontWeight: "200", width: "90px" }}
               required
               value={this.getValue()}
               onChange={(e) =>
@@ -54,6 +56,7 @@ class Counter extends Component {
                 )
               }
             ></input>
+            </div>
           </Col>
 
 
