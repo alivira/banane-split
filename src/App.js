@@ -470,7 +470,7 @@ class App extends Component {
               marginTop: "30px",
               marginBottom: "30px",
               padding: "10px",
-              width: "200px",
+              width: "300px",
             }}
           >
             <p style={{ textAlign: "center", fontWeight: "200" }}>
@@ -488,7 +488,7 @@ class App extends Component {
                 href="https://github.com/alivira/banane-split/blob/master/LICENSE"
                 target="_blank"
               >
-                MIT License
+                Some Rights Reserved (c) | MIT License
               </a>
             </p>
           </div>

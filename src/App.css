@@ -17,16 +17,13 @@
   -webkit-appearance: none;
   width: 3px;
   height: 3px;
-
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: rgba(0,0,0,.5);
-  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
-
-
 
 .App-header {
   background-color: #282c34;
@@ -52,65 +49,64 @@
   }
 }
 
-input{
+input {
   border-radius: 5px;
   background-color: #f0f8ff;
   border-width: 0px;
 }
 
-input.total{
+input.total {
   text-align: right;
 }
 
-input.usertotal{
+input.usertotal {
   text-align: right;
   width: 80px;
 }
 
-
-input.quantity{
+input.quantity {
   text-align: right;
 }
 
-input.shares{
+input.shares {
   text-align: center;
 }
 
-input.names{
+input.names {
   text-align: center;
-  font-weight: 500;
+  font-weight: 400;
 }
 
-div.money{
-  position:relative;
-  font-weight: '200';
-  color: 'lightgrey'
-  }
-  
-  div.money input{
-    padding-left: 15px;
-  }
-  
-  div.money:after{
+div.money {
+  position: relative;
+  font-weight: "200";
+  color: "lightgrey";
+}
+
+div.money input {
+  padding-left: 15px;
+}
+
+div.money:after {
   position: absolute;
-      left: 6px;
-      top: 1px;
-      content: '$';
-  }
+  left: 6px;
+  top: 1px;
+  content: "$";
+}
 
-  div.quantity{
-    position:relative;
-    font-weight: '200';
-    color: 'lightgrey'
-    }
-    
-    div.quantity input{
-      padding-left: 15px;
-    }
-    
-    div.quantity:after{
-    position: absolute;
-        left: 6px;
-        top: 1px;
-        content: '#';
-    }
+div.quantity {
+  position: relative;
+  font-weight: "200";
+  color: "lightgrey";
+}
+
+div.quantity input {
+  padding-left: 15px;
+}
+
+div.quantity:after {
+  position: absolute;
+  left: 6px;
+  top: 1px;
+  content: "#";
+}
