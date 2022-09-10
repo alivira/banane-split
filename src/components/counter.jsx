@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 class Counter extends Component {
   render() {
     return (
-      <Row style={{ flexWrap: "nowrap" }}>
+      <Row style={{ flexWrap: "nowrap", marginTop: "7px" }}>
         <Col xs="auto">
           <div className="quantity" style={{ fontWeight: "200" }}>
             <input
@@ -61,7 +61,7 @@ class Counter extends Component {
             style={{
               width: "15px",
               fill: "white",
-              margin: "10px",
+              margin: "5px",
               marginLeft: "-10px",
             }}
             onClick={() => this.props.onDelete(this.props.counter.id)}

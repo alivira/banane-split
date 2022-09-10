@@ -8,7 +8,7 @@ const NavBar = ({ totalCounters }) => {
         <img
           src={logo}
           style={{ width: "100px", margin: "10px" }}
-          alt="logo"
+          alt="It's a banana split... but french"
         ></img>
       </div>
     </nav>
