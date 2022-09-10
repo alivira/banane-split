@@ -17,7 +17,7 @@ class UserTotal extends Component {
               <input
                 className="total"
                 name="Subtotal"
-                style={{ backgroundColor: "#f0f8ff", borderRadius: "5px" }}
+                style={{ backgroundColor: "#efefef", borderRadius: "5px" }}
                 type="number"
                 value={this.props.user.total.toFixed(2)}
                 required
@@ -33,7 +33,7 @@ class UserTotal extends Component {
               <input
                 className="total"
                 name="Tax"
-                style={{ backgroundColor: "#f0f8ff" }}
+                style={{ backgroundColor: "#efefef" }}
                 type="number"
                 value={this.props.user.tax.toFixed(2)}
                 required
@@ -49,7 +49,7 @@ class UserTotal extends Component {
               <input
                 className="total"
                 name="Tip"
-                style={{ backgroundColor: "#f0f8ff" }}
+                style={{ backgroundColor: "#efefef" }}
                 type="number"
                 value={this.props.user.tip.toFixed(2)}
                 required
