@@ -27,6 +27,7 @@ class Counter extends Component {
         </Col>
         <Col xs="auto">
           <input
+            className="itemName"
             type="string"
             style={{ fontWeight: "200", width: "190px" }}
             required
@@ -89,7 +90,7 @@ class Counter extends Component {
   }
 
   getName() {
-    return this.props.counter.name;
+    return this.props.counter.itemName;
   }
 
   getQuantity() {

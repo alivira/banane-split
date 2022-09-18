@@ -59,6 +59,11 @@ input.total {
   text-align: right;
 }
 
+input.itemName {
+  text-align: right;
+  padding-right: 10px;
+}
+
 input.usertotal {
   text-align: right;
   width: 80px;

@@ -9,20 +9,37 @@ import { v4 as uuidv4 } from "uuid";
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
   integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
   crossorigin="anonymous"
-/>
+/>;
 
 class App extends Component {
   state = {
     counters: [
-      { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
-      { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
-      { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
-      { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+      { id: uuidv4(), value: 7.83, itemName: "French Fries", quantity: 1 },
+      { id: uuidv4(), value: 2.14, itemName: "Soda", quantity: 1 },
     ],
     users: [
       {
         id: uuidv4(),
-        name: "Name",
+        name: "Tom",
+        total: 0,
+        tax: 0,
+        tip: 0,
+        grandTotal: 0,
+        bills: [{ billId: "sample", portion: 0 }],
+      },
+      {
+        id: uuidv4(),
+        name: "Dick",
+        total: 0,
+        tax: 0,
+        tip: 0,
+        grandTotal: 0,
+        bills: [{ billId: "sample", portion: 0 }],
+      },
+
+      {
+        id: uuidv4(),
+        name: "Harry",
         total: 0,
         tax: 0,
         tip: 0,
@@ -56,15 +73,32 @@ class App extends Component {
   handleReset = () => {
     const resetState = {
       counters: [
-        { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
-        { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
-        { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
-        { id: uuidv4(), value: 0, itemName: "name", quantity: 1 },
+        { id: uuidv4(), value: 7.83, itemName: "French Fries", quantity: 1 },
+        { id: uuidv4(), value: 2.14, itemName: "Soda", quantity: 1 },
       ],
       users: [
         {
           id: uuidv4(),
-          name: "Name",
+          name: "Tom",
+          total: 0,
+          tax: 0,
+          tip: 0,
+          grandTotal: 0,
+          bills: [{ billId: "sample", portion: 0 }],
+        },
+        {
+          id: uuidv4(),
+          name: "Dick",
+          total: 0,
+          tax: 0,
+          tip: 0,
+          grandTotal: 0,
+          bills: [{ billId: "sample", portion: 0 }],
+        },
+
+        {
+          id: uuidv4(),
+          name: "Harry",
           total: 0,
           tax: 0,
           tip: 0,
@@ -109,7 +143,7 @@ class App extends Component {
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter };
-    counters[index].name = e;
+    counters[index].itemName = e;
     this.setState({ counters });
     this.updateUserTotalBreakdownValue(
       this.state.users,
@@ -474,7 +508,6 @@ class App extends Component {
             }}
           >
             <p style={{ textAlign: "center", fontWeight: "200" }}>
-        
               <a
                 style={{ color: "#FEB83E", fontWeight: "400" }}
                 href="https://github.com/alivira/banane-split"
@@ -482,7 +515,7 @@ class App extends Component {
               >
                 contribute
               </a>
-<br></br>
+              <br></br>
               <a
                 style={{ color: "#FEB83E", fontWeight: "200", fontSize: "8pt" }}
                 href="https://github.com/alivira/banane-split/blob/master/LICENSE"

@@ -46,7 +46,7 @@ class Counters extends Component {
         <ThemeProvider theme={theme}>
           <Container style={{ overflowX: "scroll" }}>
             <Row style={{ marginBottom: "10px", flexWrap: "nowrap" }}>
-              <Col xs={4}>
+              <Col xs="auto" style={{ width: "450px" }}>
                 <h6
                   style={{
                     textAlign: "center",
@@ -57,7 +57,7 @@ class Counters extends Component {
                   Line Items
                 </h6>
               </Col>
-              <Col xs={8}>
+              <Col xs="auto" style={{ width: "650px" }}>
                 <h6
                   style={{
                     textAlign: "center",
@@ -65,7 +65,7 @@ class Counters extends Component {
                     fontWeight: "400",
                   }}
                 >
-                  Shares
+                  Portions
                 </h6>
               </Col>
             </Row>
@@ -118,7 +118,7 @@ class Counters extends Component {
             <Row style={{ flexWrap: "nowrap" }}>
               <Col
                 xs="auto"
-                style={{ marginLeft: "50px", marginRight: "53px" }}
+                style={{ marginLeft: "50px", marginRight: "51px" }}
               >
                 <LineTotal
                   totals={totals}
