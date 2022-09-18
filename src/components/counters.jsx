@@ -57,7 +57,7 @@ class Counters extends Component {
                   Line Items
                 </h6>
               </Col>
-              <Col xs="auto" style={{ width: "650px" }}>
+              <Col xs="auto" style={{ width: "585px" }}>
                 <h6
                   style={{
                     textAlign: "center",
