@@ -265,6 +265,27 @@ class App extends Component {
     this.setState({ users: newArray });
   };
 
+  handleRemoveUser = (userId) => {
+    // Don't allow removing the last user
+    if (this.state.users.length <= 1) {
+      return;
+    }
+    
+    const newUsers = this.state.users.filter((user) => user.id !== userId);
+    
+    // Update state first, then recalculate totals in the callback
+    this.setState({ users: newUsers }, () => {
+      // Recalculate totals after removing user using the value-based method
+      // This ensures portions are recalculated correctly with updated state
+      this.updateUserTotalBreakdownValue(
+        this.state.users,
+        this.state.totals[0].tax,
+        this.state.totals[0].tip,
+        this.state.counters
+      );
+    });
+  };
+
   handleUpdateTax = (tax) => {
     const totals = [...this.state.totals];
     totals.tax = tax;
@@ -456,6 +477,7 @@ class App extends Component {
             onDelete={this.handleDelete}
             onAddRow={this.handleAddRow}
             onAddUser={this.handleAddUser}
+            onRemoveUser={this.handleRemoveUser}
             updateValue={this.handleUpdateBillValue}
             updateBillName={this.handleUpdateBillName}
             updateBillQuantity={this.handleUpdateBillQuantity}

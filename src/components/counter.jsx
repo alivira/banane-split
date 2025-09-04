@@ -72,7 +72,7 @@ class Counter extends Component {
         </Col>
 
         {this.props.users.map((user) => (
-          <Col>
+          <Col key={user.id} style={{ width: "100px", minWidth: "100px" }}>
             <User
               user={user}
               counter={this.props.counter}
