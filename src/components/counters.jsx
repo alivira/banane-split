@@ -5,6 +5,7 @@ import LineTotal from "./lineTotals";
 import UserTotal from "./userTotals";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+import ShareIcon from "@mui/icons-material/Share";
 import IconButton from "@mui/material/IconButton";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
@@ -39,6 +40,7 @@ class Counters extends Component {
       onDelete,
       onAddUser,
       onRemoveUser,
+      onShare,
       updateValue,
       updateBill,
       updateBillName,
@@ -63,6 +65,27 @@ class Counters extends Component {
     return (
       <div>
         <ThemeProvider theme={theme}>
+          {/* Share button positioned in top right */}
+          <div
+            style={{
+              position: "fixed",
+              top: "20px",
+              right: "20px",
+              zIndex: 1000,
+            }}
+          >
+            <IconButton
+              color="primary"
+              onClick={onShare}
+              style={{
+                backgroundColor: "white",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+              }}
+            >
+              <ShareIcon />
+            </IconButton>
+          </div>
+
           <Container style={{ overflowX: "scroll" }}>
             <Row style={{ marginBottom: "10px", flexWrap: "nowrap" }}>
               <Col xs="auto" style={{ width: "450px" }}>

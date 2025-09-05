@@ -87,12 +87,12 @@ class LineTotal extends Component {
   }
 
   getTax() {
-    const { tax } = this.props.totals;
+    const { tax } = this.props.totals[0];
     return tax;
   }
 
   getTip() {
-    const { tip } = this.props.totals;
+    const { tip } = this.props.totals[0];
     return tip;
   }
 
